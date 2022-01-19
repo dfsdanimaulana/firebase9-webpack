@@ -6,6 +6,11 @@ import {
     addDoc,
     deleteDoc,
     doc,
+    onSnapshot,
+    query,
+    where,
+    orderBy,
+    serverTimestamp
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -26,6 +31,7 @@ const db = getFirestore()
 const colRef = collection(db, 'books')
 
 // getting all collection data
+/*
 getDocs(colRef)
     .then((snapshot) => {
         let books = []
@@ -37,7 +43,7 @@ getDocs(colRef)
     .catch((err) => {
         console.log(err.message)
     })
-
+*/
 // adding documents
 const addBookForm = document.querySelector('.add')
 addBookForm.addEventListener('submit', (e) => {
@@ -45,6 +51,7 @@ addBookForm.addEventListener('submit', (e) => {
     addDoc(colRef, {
         title: addBookForm.title.value,
         author: addBookForm.author.value,
+        createdAt: serverTimestamp()
     }).then(() => {
         addBookForm.reset()
     })
@@ -52,7 +59,6 @@ addBookForm.addEventListener('submit', (e) => {
 
 // deleting document
 const deleteBookForm = document.querySelector('.delete')
-
 deleteBookForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
@@ -61,4 +67,24 @@ deleteBookForm.addEventListener('submit', (e) => {
     deleteDoc(docRef).then(() => {
         deleteBookForm.reset()
     })
+})
+
+// queries
+const q = query(
+  colRef,
+  // query
+  // where('author','==','dani'),
+  // order
+  //orderBy('title', 'desc')
+  orderBy('createdAt')
+)
+
+// realtime Listener firestore database
+onSnapshot(q, (snapshot)=> {
+    let books = []
+    snapshot.docs.forEach((doc) => {
+        books.push({ ...doc.data(), id: doc.id })
+    })
+    console.log('onSnapshot')
+    console.log( books)
 })
