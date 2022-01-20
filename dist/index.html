@@ -26,19 +26,33 @@
             <button type="submit">delete a book</button>
         </form>
 
+        <form class="update">
+            <label for="id">Document id:</label>
+            <input type="text" name="id" required />
+
+            <button type="submit">update a book</button>
+        </form>
+
+        <form class="signup">
+            <label for="email">email :</label>
+            <input type="email" name="email" required />
+            <label for="password">password:</label>
+            <input type="password" name="password" required />
+
+            <button type="submit">signup</button>
+        </form>
+
         <script src="bundle.js"></script>
         <!-- Eruda Console -->
         <!--
         -->
-          <script type="text/javascript" charset="utf-8">
-            
-            var script = document.createElement('script');
-            script.src = "//cdn.jsdelivr.net/npm/eruda";
-            document.body.appendChild(script);
+        <script type="text/javascript" charset="utf-8">
+            var script = document.createElement('script')
+            script.src = '//cdn.jsdelivr.net/npm/eruda'
+            document.body.appendChild(script)
             script.onload = function () {
-              eruda.init()
+                eruda.init()
             }
-            
-          </script>
+        </script>
     </body>
 </html>
